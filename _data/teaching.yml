@@ -1,0 +1,43 @@
+# Teaching items rendered on the /teaching/ page as a single grid of cards.
+#
+# Fields for each item:
+#   title       : course / subject name (required)
+#   link        : URL the course name links to (required)
+#   degree      : degree course in which the subject is taught (e.g. Laurea in Ingegneria Informatica)
+#   professor   : professor who teaches the subject
+#
+# Example:
+#   - title: Industrial Automation and Robotics
+#     link: https://www.unime.it/
+#     degree: Laurea in Ingegneria Informatica
+#     professor: Francesca Sapuppo
+
+items:
+  - title: Soft Sensing and System Identification
+    link: https://unime.coursecatalogue.cineca.it/corsi/2026/10817/insegnamenti/2026/14818/2026/9999?annoOrdinamento=2026&coorte=2026
+    degree: LM ENGINEERING IN COMPUTER SCIENCE 
+    professor: Maria Gabriella Xibilia
+  - title: Controlli Automatici
+    link: https://unime.coursecatalogue.cineca.it/corsi/2025/10821/insegnamenti/2026/13395/2025/9999?annoOrdinamento=2025&coorte=2025
+    degree: LT INGEGNERIA ELETTRONICA E INFORMATICA 
+    professor: Maria Gabriella Xibilia
+  - title: Industrial Automation and Robotics
+    link: https://unime.coursecatalogue.cineca.it/corsi/2025/10817/insegnamenti/2026/14819/2025/9999?annoOrdinamento=2025&coorte=2025
+    degree: LM ENGINEERING IN COMPUTER SCIENCE 
+    professor: Luca Patanè
+  - title: Industrial Automation and Robotics
+    link: https://unime.coursecatalogue.cineca.it/corsi/2026/10820/insegnamenti/2026/12745/2026/9999?annoOrdinamento=2026&coorte=2026
+    degree: LM INGEGNERIA ELETTRONICA PER L'INDUSTRIA 
+    professor: Luca Patanè
+  - title: Robotica Bioispirata
+    link: https://unime.coursecatalogue.cineca.it/af/2026?corso=1081R&annoOrdinamento=2024&pds=110&coorte=2025&ad=A003267
+    degree: LM BIOINGEGNERIA
+    professor: Luca Patanè
+  - title: Modellistica e Sistemi di Controllo
+    link: https://unime.coursecatalogue.cineca.it/af/2026?corso=1080R&annoOrdinamento=2025&pds=PDS0-2025&coorte=2025&ad=A001279
+    degree: LT INGEGNERIA BIOMEDICA
+    professor: Luca Patanè
+  - title: Automazione e Controllo dei Sistemi Meccanici
+    link: https://unime.coursecatalogue.cineca.it/corsi/2025/10621/insegnamenti/2026/13631/2024/2?annoOrdinamento=2024&coorte=2025
+    degree: LM BIOINGEGNERIA
+    professor: Francesca Sapuppo
