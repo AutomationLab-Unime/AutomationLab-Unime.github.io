@@ -22,6 +22,7 @@ groups:
       - name: Maria Gabriella
         surname: Xibilia
         role: Associate Professor
+        image: /assets/img/people/MGX.jpg
       - name: Luca
         surname: Patanè
         role: Associate Professor
@@ -32,12 +33,14 @@ groups:
       - name: Francesca
         surname: Sapuppo
         role: Research Fellow
+        image: /assets/img/people/FS.jpg
 
   - title: PhD Students
     members:
       - name: Antonino
         surname: Maio
         role: PhD Student
+        image: /assets/img/people/AM.jpg
       - name: Gianluca
         surname: Ragusa
         role: PhD Student
