@@ -1,12 +1,14 @@
 ---
 layout: page
 permalink: /publications/
-title: publications
-description: Publications of the lab, kept up to date from OpenAlex.
+title: Publications
 nav: true
 nav_order: 2
 
 _styles: |
+  .post-header {
+    display: none;
+  }
   .pub-header {
     display: flex;
     flex-wrap: wrap;
@@ -28,6 +30,14 @@ _styles: |
     font-size: 0.85rem;
     color: var(--global-text-color-light);
     white-space: nowrap;
+  }
+  #pub-load-more {
+    font-size: 1.1rem;
+    padding: 0.625rem 1.75rem;
+    font-weight: 600;
+    color: var(--global-theme-color);
+    border: 2px solid var(--global-theme-color);
+    border-radius: 0.5rem;
   }
   .pub-footer {
     display: flex;
@@ -108,7 +118,7 @@ _styles: |
 </div>
 
 <div class="pub-footer">
-  <button id="pub-load-more" class="btn btn-sm z-depth-0" type="button" hidden>Load more</button>
+  <button id="pub-load-more" class="btn z-depth-0" type="button" hidden>Load more</button>
 </div>
 
 <script>

@@ -2,11 +2,13 @@
 layout: page
 permalink: /people/
 title: People
-description: Members of the laboratory.
 nav: true
 nav_order: 7
 
 _styles: |
+  .post-header {
+    display: none;
+  }
   .people-section {
     color: var(--global-theme-color);
     border-bottom: 1px solid var(--global-divider-color);
