@@ -7,7 +7,7 @@ nav: true
 nav_order: 2
 
 _styles: |
-  .pub-toolbar {
+  .pub-header {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -29,20 +29,86 @@ _styles: |
     color: var(--global-text-color-light);
     white-space: nowrap;
   }
+  .pub-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  #publications ol.bibliography {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #publications .bibliography > li {
+    background-color: var(--global-card-bg-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.25rem;
+    margin-bottom: 1rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  #publications .bibliography > li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+  #publications .bibliography > li .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  #publications .bibliography > li .col-sm-8,
+  #publications .bibliography > li .col-sm-10 {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #publications .bibliography > li .title {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+  #publications .bibliography > li .title a {
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+  #publications .bibliography > li .title a:hover {
+    text-decoration: underline;
+  }
+  #publications .bibliography > li .author {
+    font-size: 0.9rem;
+    color: var(--global-text-color);
+  }
+  #publications .bibliography > li .periodical {
+    font-size: 0.85rem;
+    color: var(--global-text-color-light);
+  }
+  #publications .bibliography > li .links {
+    margin-top: 0.5rem;
+  }
+  #publications .bibliography > li .badges {
+    margin-top: 0.5rem;
+  }
 ---
 
 {::nomarkdown}
 
-<div class="pub-toolbar">
-  <input type="search" id="pub-search" placeholder="Cerca per titolo, autore, anno ..." aria-label="Search publications">
-  <div class="pub-actions">
-    <span id="pub-count" role="status"></span>
-    <button id="pub-load-more" class="btn btn-sm z-depth-0" type="button" hidden>Carica altri</button>
-  </div>
+<div class="pub-header">
+  <input
+    type="search"
+    id="pub-search"
+    placeholder="Search by title, author, year..."
+    aria-label="Search publications"
+  >
+  <span id="pub-count" role="status"></span>
 </div>
 
 <div id="publications" class="publications">
   {% bibliography %}
+</div>
+
+<div class="pub-footer">
+  <button id="pub-load-more" class="btn btn-sm z-depth-0" type="button" hidden>Load more</button>
 </div>
 
 <script>
@@ -62,26 +128,51 @@ _styles: |
 
     var groups = [];
     var current = null;
-    for (var i = 0; i < container.children.length; i++) {
-      var el = container.children[i];
+    Array.prototype.forEach.call(container.children, function (el) {
       if (el.tagName === "H2") {
         current = { header: el, items: [] };
         groups.push(current);
-      } else if (el.classList && el.classList.contains("bibliography")) {
-        var kids = el.children;
-        for (var j = 0; j < kids.length; j++) {
-          if (!current) {
-            current = { header: null, items: [] };
-            groups.push(current);
-          }
-          current.items.push(kids[j]);
+      } else if (el.tagName === "OL" || (el.classList && el.classList.contains("bibliography"))) {
+        var lis = Array.prototype.filter.call(el.children, function (child) {
+          return child.tagName === "LI";
+        });
+        if (!current) {
+          current = { header: null, items: [] };
+          groups.push(current);
         }
+        Array.prototype.push.apply(current.items, lis);
       }
-    }
+    });
 
     var items = [];
     groups.forEach(function (group) {
-      items.push.apply(items, group.items);
+      Array.prototype.push.apply(items, group.items);
+    });
+
+    items.forEach(function (li) {
+      var titleEl = li.querySelector(".title");
+      var linksEl = li.querySelector(".links");
+      if (!titleEl || !linksEl) {
+        return;
+      }
+      var htmlBtn = null;
+      var links = linksEl.querySelectorAll("a");
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].textContent.trim().toLowerCase() === "html") {
+          htmlBtn = links[i];
+          break;
+        }
+      }
+      if (htmlBtn && htmlBtn.href) {
+        htmlBtn.style.display = "none";
+        var a = document.createElement("a");
+        a.href = htmlBtn.href;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = titleEl.textContent;
+        titleEl.textContent = "";
+        titleEl.appendChild(a);
+      }
     });
 
     function norm(value) {
@@ -108,10 +199,10 @@ _styles: |
         }
       });
       counter.textContent = query
-        ? visible + " risultato/i"
-        : "Mostrati " + visible + " di " + items.length;
+        ? visible + " result(s)"
+        : "Showing " + visible + " of " + items.length;
+      moreBtn.textContent = "Load more (" + (items.length - visible) + " remaining)";
       moreBtn.hidden = !!(query || visible >= items.length);
-      moreBtn.textContent = "Carica altri (" + (items.length - visible) + " da mostrare)";
     }
 
     if (moreBtn) {
