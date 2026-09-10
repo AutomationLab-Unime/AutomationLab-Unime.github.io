@@ -1,0 +1,43 @@
+# People of the Automation and Robotics Laboratory.
+#
+# Groups are rendered on the /people/ page as cards, each showing
+# Name, Surname, Role and a round photo.
+#
+# Fields for each member:
+#   name     : first name (required)
+#   surname  : last name  (required)
+#   role     : role / position (required)
+#   image    : optional photo path under /assets/img/people/
+#              (leave empty to show an initials avatar instead)
+#
+# Example:
+#   - name: Mario
+#     surname: Rossi
+#     role: Full Professor
+#     image: /assets/img/people/mario-rossi.jpg
+
+groups:
+  - title: Professors
+    members:
+      - name: Maria Gabriella
+        surname: Xibilia
+        role: Associate Professor
+      - name: Luca
+        surname: Patanè
+        role: Associate Professor
+	image: /assets/img/people/LP.jpg
+
+  - title: Researchers
+    members:
+      - name: Francesca
+        surname: Sapuppo
+        role: Research Fellow
+
+  - title: PhD Students
+    members:
+      - name: Antonino
+        surname: Maio
+        role: PhD Student
+      - name: Gianluca
+        surname: Ragusa
+        role: PhD Student
