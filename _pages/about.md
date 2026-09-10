@@ -1,6 +1,6 @@
 ---
-layout: about
-title: about
+layout: Home
+title: Home
 permalink: /
 subtitle: University of Messina
 

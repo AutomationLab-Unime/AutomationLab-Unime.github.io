@@ -25,7 +25,7 @@ groups:
       - name: Luca
         surname: Patanè
         role: Associate Professor
-	image: /assets/img/people/LP.jpg
+        image: /assets/img/people/LP.jpg
 
   - title: Researchers
     members:
