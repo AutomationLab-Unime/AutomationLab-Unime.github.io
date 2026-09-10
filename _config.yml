@@ -356,8 +356,8 @@ display_categories: ["external-services"] # these categories will be displayed o
 # -----------------------------------------------------------------------------
 
 scholar:
-  last_name: [Einstein]
-  first_name: [Albert, A.]
+  last_name: [Xibilia, Patanè, Sapuppo, Maio, Ragusa]
+  first_name: [Maria Gabriella, Luca, Francesca, Antonino, Gianluca]
 
   style: apa
   locale: en

@@ -1,0 +1,41 @@
+name: Update publications periodically
+
+on:
+  schedule:
+    # Every Monday at 05:17 UTC
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-publications
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+      - name: Setup Python 🐍
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+      - name: Regenerate bibliography from OpenAlex 📄
+        run: |
+          pip3 install pyyaml
+          python scripts/update_bibliography.py --mailto "automationlab.unime.site@gmail.com"
+      - name: Commit and push updated bibliography if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _bibliography/papers.bib
+          if git diff --cached --quiet; then
+            echo "No bibliography changes."
+          else
+            git commit -m "chore: update publications from OpenAlex"
+            git push
+          fi

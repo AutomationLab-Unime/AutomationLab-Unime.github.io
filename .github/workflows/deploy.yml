@@ -14,6 +14,8 @@ on:
       - "**/*.md"
       - "**.scss"
       - "**.yml"
+      - "**.py"
+      - "scripts/**"
       - "Gemfile"
       - "Gemfile.lock"
       - "!.github/workflows/axe.yml"
@@ -42,6 +44,8 @@ on:
       - "**/*.md"
       - "**.scss"
       - "**.yml"
+      - "**.py"
+      - "scripts/**"
       - "Gemfile"
       - "Gemfile.lock"
       - "!.github/workflows/axe.yml"
@@ -79,6 +83,10 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip" # caching pip dependencies
+      - name: Regenerate publications from OpenAlex 📄
+        run: |
+          pip3 install pyyaml
+          python scripts/update_bibliography.py --mailto "automationlab.unime.site@gmail.com"
       - name: Setup Node 🧰
         uses: actions/setup-node@v4
         with:
