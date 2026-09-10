@@ -1,6 +1,8 @@
 ---
 layout: page
 permalink: /people/
+title: People
+description: Members of the laboratory.
 nav: true
 nav_order: 7
 
