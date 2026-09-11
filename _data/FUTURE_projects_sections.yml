@@ -1,0 +1,35 @@
+# Configuration for scripts/FUTURE_update_projects.py — the Projects page generator.
+#
+# github_owner : GitHub user or organization whose public repositories populate
+#                the Projects page (the site repo itself is always skipped).
+# ignore       : repository names to skip even though they have matching topics.
+# sections     : ordered list of Projects page sections. Each section has a
+#                title (exactly as displayed on the page) and a topics list.
+#                A repository is placed in the FIRST section whose topics
+#                intersect the repository's GitHub topics (tags).
+#
+# Tag a repository with any of the topics listed below to place it in the
+# corresponding section. Repositories without a matching topic are not shown.
+
+github_owner: AutomationLab-Unime
+
+ignore:
+  - .github
+
+sections:
+  - title: Industrial Automation and Robotics
+    topics:
+      - industrial-automation
+      - industrial-automation-and-robotics
+      - iaar
+
+  - title: Bio-Inspired Robotics
+    topics:
+      - bio-inspired-robotics
+      - bio-inspired
+      - snn
+
+  - title: Thesis
+    topics:
+      - thesis
+      - tesi

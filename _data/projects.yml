@@ -1,0 +1,61 @@
+# Projects rendered on the /projects/ page, grouped by section.
+#   Each section (e.g. "Industrial Automation and Robotics") is one grid of cards.
+#   Fields for each item:
+#     title  : project name (required)
+#     link   : URL of the repository the title links to (required)
+#     author : author(s) of the project, comma-separated (required)
+#     year   : year of the project (optional)
+
+groups:
+  - title: Industrial Automation and Robotics
+    items:
+      - title: Cake assembly and decoration system
+        link: https://github.com/AutomationLab-Unime/CakeProduction
+        author: Claudia Vinci, Viviana Casale, Mary Aliberto
+        year: 2025
+      - title: Material-handling cell using Fischertechnik 3D-Robot
+        link: https://github.com/AutomationLab-Unime/AutomationProjectLMF
+        author: Giovanni Lombardo, Salvatore Marchese, Manuel Fabiano
+        year: 2025
+      - title: AI-based pick-and-place system using Fischertechnik 3D-Robot
+        link: https://github.com/AutomationLab-Unime/IAAR-Project-Catalfamo_Arico
+        author: Enrico Catalfamo, Vincenzo Aricò
+        year: 2025
+      - title: Self drive car
+        link: https://github.com/AutomationLab-Unime/Self-drive-car
+        author: Allegra Davide Giuseppe, Miano Alberto, Musmeci Edoardo
+        year: 2025
+      - title: ROS2 Rover Simulation
+        link: https://github.com/AutomationLab-Unime/Rover_Simulation_2
+        author: Giovanni Arlotta
+        year: 2025
+      - title: Water treatment & Tape library
+        link: https://github.com/AutomationLab-Unime/IAAR-Project-Orlando_Arena_Corriera
+        author: Tancredi Orlando, Michele Arena, Fabrizio Corriera
+        year: 2025
+      - title: Pick and Place
+        link: https://github.com/AutomationLab-Unime/IAAR-Maio
+        author: Antonino Maio, Ilenia Ficili
+        year: 2025
+      - title: Fishertechnik 3D arm robot
+        link: https://github.com/AutomationLab-Unime/fischertechnik-3D-robot
+        author: Gianluca Catalfamo, Gabriele Morabito, Giorgio Nocera, Serena Sebbio
+        year: 2020
+
+  - title: Bio-Inspired Robotics
+    items:
+      - title: Bio-inspired Trail Following Rover
+        link: https://github.com/AutomationLab-Unime/snn-path-following
+        author: Claudio Giacobbe
+        year: 2026
+      - title: Stima del peso tramite braccio robotico
+        link: https://github.com/AutomationLab-Unime/Stima_Peso_SNN_Sindoni
+        author: Gianluca Sindoni
+        year: 2026
+
+  - title: Thesis
+    items:
+#      - title: Example thesis
+#        link: https://github.com/AutomationLab-Unime
+#        author: Antonino Maio
+#        year: 2026

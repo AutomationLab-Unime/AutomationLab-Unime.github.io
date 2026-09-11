@@ -1,16 +1,79 @@
 ---
 layout: page
-title: projects
+title: Projects
 permalink: /projects/
-description: A growing collection of your cool projects.
 nav: true
 nav_order: 3
+
+_styles: |
+  .post-header {
+    display: none;
+  }
+  .projects-section {
+    color: var(--global-theme-color);
+    border-bottom: 1px solid var(--global-divider-color);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 1.5rem;
+  }
+  .projects-card {
+    text-align: center;
+    background-color: var(--global-card-bg-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1rem;
+  }
+  .projects-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+  .projects-title {
+    margin: 0.25rem 0;
+    font-size: 1.05rem;
+    color: var(--global-text-color);
+  }
+  .projects-title a {
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+  .projects-title a:hover {
+    text-decoration: underline;
+  }
+  .projects-author {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+  }
+  .projects-year {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+  }
 ---
 
-## Industrial Automation and Robotics
+{::nomarkdown}
 
-Coming Soon
+{% for group in site.data.projects.groups %}
 
-## Bio-Inspired Robotics
+<h2 class="projects-section">{{ group.title }}</h2>
 
-Coming Soon
+<div class="projects-grid">
+  {% for item in group.items %}
+  <div class="projects-card">
+    <h3 class="projects-title">
+      <a href="{{ item.link }}">{{ item.title }}</a>
+    </h3>
+    <p class="projects-author">{{ item.author }}</p>
+    {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endfor %}
+
+{:/nomarkdown}
