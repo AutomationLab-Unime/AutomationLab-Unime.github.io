@@ -14,6 +14,8 @@ _styles: |
     gap: 1.5rem;
   }
   .teaching-card {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     background-color: var(--global-card-bg-color);
     border: 1px solid var(--global-divider-color);
@@ -36,13 +38,20 @@ _styles: |
   .teaching-title a:hover {
     text-decoration: underline;
   }
+  .teaching-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0.5rem 0;
+  }
   .teaching-degree {
-    margin: 0.25rem 0;
+    margin: 0;
     font-size: 0.9rem;
     color: var(--global-text-color);
   }
   .teaching-professor {
-    margin: 0.25rem 0 0;
+    margin: 0;
     font-size: 0.8rem;
     color: var(--global-text-color-light);
   }
@@ -56,7 +65,9 @@ _styles: |
     <h3 class="teaching-title">
       <a href="{{ item.link }}">{{ item.title }}</a>
     </h3>
-    <p class="teaching-degree">{{ item.degree }}</p>
+    <div class="teaching-body">
+      <p class="teaching-degree">{{ item.degree }}</p>
+    </div>
     <p class="teaching-professor">Docente: {{ item.professor }}</p>
   </div>
   {% endfor %}

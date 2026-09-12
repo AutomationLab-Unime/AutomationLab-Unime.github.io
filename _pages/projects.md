@@ -22,6 +22,8 @@ _styles: |
     gap: 1.5rem;
   }
   .projects-card {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     background-color: var(--global-card-bg-color);
     border: 1px solid var(--global-divider-color);
@@ -44,15 +46,28 @@ _styles: |
   .projects-title a:hover {
     text-decoration: underline;
   }
+  .projects-cdl {
+    margin: 0.25rem 0;
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+  }
+  .projects-meta {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding-top: 1rem;
+    gap: 0.25rem;
+  }
   .projects-author {
-    margin: 0.25rem 0 0;
+    margin: 0;
     font-size: 0.8rem;
     color: var(--global-text-color-light);
   }
   .projects-year {
-    margin: 0.25rem 0 0;
+    margin: 0;
     font-size: 0.8rem;
     color: var(--global-text-color-light);
+    align-self: flex-end;
   }
 ---
 
@@ -68,8 +83,11 @@ _styles: |
     <h3 class="projects-title">
       <a href="{{ item.link }}">{{ item.title }}</a>
     </h3>
-    <p class="projects-author">{{ item.author }}</p>
-    {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+    {% if item.cdl %}<p class="projects-cdl">CdL: {{ item.cdl }}</p>{% endif %}
+    <div class="projects-meta">
+      <p class="projects-author">{{ item.author }}</p>
+      {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+    </div>
   </div>
   {% endfor %}
 </div>

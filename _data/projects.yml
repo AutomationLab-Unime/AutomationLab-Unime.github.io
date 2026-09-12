@@ -5,6 +5,7 @@
 #     link   : URL of the repository the title links to (required)
 #     author : author(s) of the project, comma-separated (required)
 #     year   : year of the project (optional)
+#     cdl    : degree course (only used for Thesis items, e.g. "CdL: ...")
 
 groups:
   - title: Industrial Automation and Robotics
@@ -75,19 +76,24 @@ groups:
         link: https://github.com/AutomationLab-Unime/Neuron-Hardware-Pante
         author: Serena Pantè
         year: 2026
+        cdl: Ing. Elettronica e Informatica
       - title: Tecniche di Controllo Basate su Reti Spiking per Manipolatori Robotici
         link: https://github.com/AutomationLab-Unime/SNN-Robotic-manipulator-Sammoudi
         author: Mariam Sammoudi
         year: 2026
+        cdl: Ing. Biomedica
       - title: Analisi Volumetrica Dei Gangli della Base per L’identificazione di Biomarcatori Strutturali nel Morbo di Parkinson
         link: https://github.com/AutomationLab-Unime/Parkinson-Basal-Ganglia-Analysis-Gatto
         author: Elvira Pia Gatto
         year: 2026
+        cdl: Ing. Biomedica
       - title: Sviluppo di Algoritmi di Controllo per Applicazioni su Bracci Robotici
         link: https://github.com/AutomationLab-Unime/Robotic-Arm-Oliva
         author: Martina Oliva
         year: 2026
+        cdl: Ing. Biomedica
       - title: Classificazione Automatica di Battiti ECG E Analisi Dell’influenza Degli Spike di Pacemaker Tramite Modelli Data-driven
         link: https://github.com/AutomationLab-Unime/ECG-Classification-D-Agostino
         author: Elisa D'Agostino
         year: 2026
+        cdl: Ing. Biomedica
