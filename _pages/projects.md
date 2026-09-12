@@ -35,8 +35,13 @@ _styles: |
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
   .projects-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     margin: 0.25rem 0;
     font-size: 1.05rem;
+    line-height: 1.35;
     color: var(--global-text-color);
   }
   .projects-title a {
@@ -46,17 +51,24 @@ _styles: |
   .projects-title a:hover {
     text-decoration: underline;
   }
-  .projects-cdl {
-    margin: 0.25rem 0;
-    font-size: 0.8rem;
-    color: var(--global-text-color-light);
-  }
-  .projects-meta {
+  .projects-body {
     display: flex;
     flex-direction: column;
-    margin-top: auto;
-    padding-top: 1rem;
-    gap: 0.25rem;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0.5rem 0;
+  }
+  .projects-bottom {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+  }
+  .projects-cdl {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+    text-align: left;
   }
   .projects-author {
     margin: 0;
@@ -64,7 +76,7 @@ _styles: |
     color: var(--global-text-color-light);
   }
   .projects-year {
-    margin: 0;
+    margin: 0 0 0 auto;
     font-size: 0.8rem;
     color: var(--global-text-color-light);
     align-self: flex-end;
@@ -81,13 +93,24 @@ _styles: |
   {% for item in group.items %}
   <div class="projects-card">
     <h3 class="projects-title">
-      <a href="{{ item.link }}">{{ item.title }}</a>
+      <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
     </h3>
-    {% if item.cdl %}<p class="projects-cdl">CdL: {{ item.cdl }}</p>{% endif %}
-    <div class="projects-meta">
+    {% if item.cdl %}
+    <div class="projects-body">
       <p class="projects-author">{{ item.author }}</p>
+    </div>
+    <div class="projects-bottom">
+      <p class="projects-cdl">CdL: {{ item.cdl }}</p>
       {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
     </div>
+    {% else %}
+    <div class="projects-body">
+      <p class="projects-author">{{ item.author }}</p>
+    </div>
+    <div class="projects-bottom">
+      {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+    </div>
+    {% endif %}
   </div>
   {% endfor %}
 </div>
