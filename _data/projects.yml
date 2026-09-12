@@ -52,7 +52,7 @@ groups:
         link: https://github.com/AutomationLab-Unime/snn-path-following
         author: Claudio Giacobbe
         year: 2026
-      - title: EMOROB: Modello Bio-Ispirato per la Navigazione Adattiva in Ambienti Ospedalieri
+      - title: "EMOROB: Modello Bio-Ispirato per la Navigazione Adattiva in Ambienti Ospedalieri"
         link: https://github.com/AutomationLab-Unime/EMOROB-Bioinspired-Adaptive-Navigation-Altomonte
         author: Federica Altomonte
         year: 2026
