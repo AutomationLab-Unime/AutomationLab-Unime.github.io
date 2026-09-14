@@ -266,48 +266,79 @@ _styles: |
         .trim();
     }
 
+    var SELF_LAST_NORM = SELF_LAST.map(norm);
+    var SELF_FIRST_NORM = SELF_FIRST.map(norm);
+
     function isSelf(first, last) {
-      return SELF_LAST.indexOf(norm(last)) !== -1 && SELF_FIRST.indexOf(norm(first)) !== -1;
+      return SELF_LAST_NORM.indexOf(norm(last)) !== -1 && SELF_FIRST_NORM.indexOf(norm(first)) !== -1;
     }
 
     function boldSelfAuthors(span) {
-      var html = span.innerHTML || "";
-      if (html.indexOf("<sup>") === -1) {
-        var parts = html.split(", ");
-        var changed = false;
-        for (var i = 0; i < parts.length; i++) {
-          var words = parts[i].trim().split(/\s+/);
-          var last = words.pop();
-          var first = words.join(" ");
-          if (isSelf(first, last)) {
-            parts[i] = "<strong>" + parts[i].trim() + "</strong>";
+      var text = (span.textContent || "").trim();
+      var parts = text.split(", ");
+      var changed = false;
+      for (var i = 0; i < parts.length; i++) {
+        var words = parts[i].trim().split(/\s+/);
+        if (words.length < 2) {
+          continue;
+        }
+        var last = words.pop();
+        var first = words.join(" ");
+        if (isSelf(first, last)) {
+          var wrapped = "<strong>" + parts[i].trim() + "</strong>";
+          if (span.innerHTML.indexOf(wrapped) === -1) {
+            span.innerHTML = span.innerHTML.split(parts[i].trim()).join(wrapped);
             changed = true;
           }
         }
-        if (changed) {
-          span.innerHTML = parts.join(", ");
-        }
       }
-      span.classList.add("more-authors-expanded");
+      return changed;
     }
 
-    setInterval(function () {
-      var mores = container.querySelectorAll("span.more-authors");
-      for (var i = 0; i < mores.length; i++) {
-        var span = mores[i];
-        var text = (span.textContent || "").trim();
-        if (/more author/i.test(text)) {
-          span.classList.remove("more-authors-expanded");
-          span.setAttribute("data-before", "");
-          continue;
-        }
-        var prev = span.getAttribute("data-before") || "";
-        span.setAttribute("data-before", text);
-        if (text && text === prev) {
-          boldSelfAuthors(span);
-        }
+    function hideSelfAuthors(span) {
+      span.classList.remove("more-authors-expanded");
+      span.removeAttribute("data-bolded");
+    }
+
+    function tryBold(span, attempts, lastText) {
+      if (attempts > 40) {
+        return;
       }
-    }, 120);
+      var text = (span.textContent || "").trim();
+      if (/more author/i.test(text)) {
+        if (span.hasAttribute("data-open")) {
+          setTimeout(function () {
+            tryBold(span, attempts + 1, "");
+          }, 150);
+        } else {
+          hideSelfAuthors(span);
+        }
+        return;
+      }
+      boldSelfAuthors(span);
+      if (text === lastText) {
+        span.classList.add("more-authors-expanded");
+        span.setAttribute("data-bolded", "1");
+        return;
+      }
+      setTimeout(function () {
+        tryBold(span, attempts + 1, text);
+      }, 150);
+    }
+
+    container.addEventListener("click", function (event) {
+      var span = event.target.closest("span.more-authors");
+      if (!span) {
+        return;
+      }
+      var opening = !span.hasAttribute("data-open");
+      span.setAttribute("data-open", opening ? "1" : "");
+      if (!opening) {
+        hideSelfAuthors(span);
+        return;
+      }
+      tryBold(span, 0, "");
+    });
   })();
 </script>
 

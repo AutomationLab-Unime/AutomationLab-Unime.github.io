@@ -356,7 +356,7 @@ display_categories: ["external-services"] # these categories will be displayed o
 # -----------------------------------------------------------------------------
 
 scholar:
-  last_name: [Xibilia, Patanè, Caponetto, Sapuppo, Maio, Ragusa]
+  last_name: [Xibilia, Patanè, Patané, Patane, Caponetto, Sapuppo, Maio, Ragusa]
   first_name: [Maria Gabriella, Luca, Riccardo, Francesca, Antonino, Gianluca, Giovanni]
 
   style: apa
