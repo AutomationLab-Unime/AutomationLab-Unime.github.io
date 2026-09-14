@@ -19,7 +19,7 @@ items:
     professor: Maria Gabriella Xibilia
   - title: Controlli Automatici
     link: https://unime.coursecatalogue.cineca.it/corsi/2025/10821/insegnamenti/2026/13395/2025/9999?annoOrdinamento=2025&coorte=2025
-    degree: LT INGEGNERIA ELETTRONICA E INFORMATICA 
+    degree: INGEGNERIA ELETTRONICA E INFORMATICA
     professor: Maria Gabriella Xibilia
   - title: Industrial Automation and Robotics
     link: https://unime.coursecatalogue.cineca.it/corsi/2025/10817/insegnamenti/2026/14819/2025/9999?annoOrdinamento=2025&coorte=2025
@@ -35,9 +35,21 @@ items:
     professor: Luca Patanè
   - title: Modellistica e Sistemi di Controllo
     link: https://unime.coursecatalogue.cineca.it/af/2026?corso=1080R&annoOrdinamento=2025&pds=PDS0-2025&coorte=2025&ad=A001279
-    degree: LT INGEGNERIA BIOMEDICA
+    degree: INGEGNERIA BIOMEDICA
     professor: Luca Patanè
+  - title: Fondamenti di Automatica
+    link: https://unime.coursecatalogue.cineca.it/corsi/2024/10502/insegnamenti/2026/2688/2020/9999?annoOrdinamento=2020&coorte=2024
+    degree: INGEGNERIA GESTIONALE
+    professor: Riccardo Caponetto
+  - title: Sistemi Digitali per l'Automazione dei Processi
+    link: https://unime.coursecatalogue.cineca.it/corsi/2026/10825/insegnamenti/2026/13934/2026/2?annoOrdinamento=2026&coorte=2026
+    degree: LM INGEGNERIA GESTIONALE
+    professor: Riccardo Caponetto
   - title: Automazione e Controllo dei Sistemi Meccanici
     link: https://unime.coursecatalogue.cineca.it/corsi/2025/10621/insegnamenti/2026/13631/2024/2?annoOrdinamento=2024&coorte=2025
-    degree: LM BIOINGEGNERIA
+    degree: LM BIOINGEGNERIA & LM INGEGNERIA MECCANICA
+    professor: Francesca Sapuppo
+  - title: Basi della Robotica
+    link:
+    degree: MEDICINA E CHIRURGIA
     professor: Francesca Sapuppo
