@@ -99,6 +99,21 @@ _styles: |
   #publications .bibliography > li .badges {
     margin-top: 0.5rem;
   }
+  #publications .bibliography > li .author > em {
+    font-style: normal;
+    font-weight: 700;
+    border-bottom: none;
+  }
+  #publications .bibliography > li .author > span.more-authors.more-authors-expanded {
+    border-bottom: none;
+  }
+  #publications > h2 {
+    color: var(--global-theme-color);
+    border-bottom: 1px solid var(--global-divider-color);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
 ---
 
 {::nomarkdown}
@@ -226,6 +241,73 @@ _styles: |
     }
 
     render();
+  })();
+</script>
+
+<script>
+  (function () {
+    "use strict";
+
+    var container = document.getElementById("publications");
+    if (!container) {
+      return;
+    }
+
+    var SELF_LAST = {{ site.scholar.last_name | jsonify }};
+    var SELF_FIRST = {{ site.scholar.first_name | jsonify }};
+
+    function norm(value) {
+      return (value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9 ]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function isSelf(first, last) {
+      return SELF_LAST.indexOf(norm(last)) !== -1 && SELF_FIRST.indexOf(norm(first)) !== -1;
+    }
+
+    function boldSelfAuthors(span) {
+      var html = span.innerHTML || "";
+      if (html.indexOf("<sup>") === -1) {
+        var parts = html.split(", ");
+        var changed = false;
+        for (var i = 0; i < parts.length; i++) {
+          var words = parts[i].trim().split(/\s+/);
+          var last = words.pop();
+          var first = words.join(" ");
+          if (isSelf(first, last)) {
+            parts[i] = "<strong>" + parts[i].trim() + "</strong>";
+            changed = true;
+          }
+        }
+        if (changed) {
+          span.innerHTML = parts.join(", ");
+        }
+      }
+      span.classList.add("more-authors-expanded");
+    }
+
+    setInterval(function () {
+      var mores = container.querySelectorAll("span.more-authors");
+      for (var i = 0; i < mores.length; i++) {
+        var span = mores[i];
+        var text = (span.textContent || "").trim();
+        if (/more author/i.test(text)) {
+          span.classList.remove("more-authors-expanded");
+          span.setAttribute("data-before", "");
+          continue;
+        }
+        var prev = span.getAttribute("data-before") || "";
+        span.setAttribute("data-before", text);
+        if (text && text === prev) {
+          boldSelfAuthors(span);
+        }
+      }
+    }, 120);
   })();
 </script>
 
