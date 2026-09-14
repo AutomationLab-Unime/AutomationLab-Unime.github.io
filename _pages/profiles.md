@@ -65,6 +65,23 @@ _styles: |
     font-size: 0.85rem;
     color: var(--global-text-color-light);
   }
+  .people-email {
+    margin-top: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.05rem;
+    color: var(--global-theme-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 50%;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .people-email:hover {
+    color: #ffffff;
+    background-color: var(--global-theme-color);
+  }
 ---
 
 {::nomarkdown}
@@ -83,6 +100,11 @@ _styles: |
     {% endif %}
     <h3 class="people-name">{{ member.name }} {{ member.surname }}</h3>
     <p class="people-role">{{ member.role }}</p>
+    {% if member.email %}
+    <a class="people-email" href="mailto:{{ member.email }}" title="{{ member.email }}" aria-label="Invia una mail a {{ member.name }} {{ member.surname }}">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
+    {% endif %}
   </div>
   {% endfor %}
 </div>

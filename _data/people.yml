@@ -1,7 +1,7 @@
 # People of the Automation and Robotics Laboratory.
 #
 # Groups are rendered on the /people/ page as cards, each showing
-# Name, Surname, Role and a round photo.
+# Name, Surname, Role, a round photo and (when set) an email icon.
 #
 # Fields for each member:
 #   name     : first name (required)
@@ -9,12 +9,15 @@
 #   role     : role / position (required)
 #   image    : optional photo path under /assets/img/people/
 #              (leave empty to show an initials avatar instead)
+#   email    : optional address; when set, a mail icon is shown on the card
+#              (leave empty to hide it)
 #
 # Example:
 #   - name: Mario
 #     surname: Rossi
 #     role: Full Professor
 #     image: /assets/img/people/mario-rossi.jpg
+#     email: mario.rossi@unime.it
 
 groups:
   - title: Professors
@@ -23,20 +26,24 @@ groups:
         surname: Xibilia
         role: Associate Professor
         image: /assets/img/people/MGX.jpg
+        email: mxibilia@unime.it
       - name: Luca
         surname: Patanè
         role: Associate Professor
         image: /assets/img/people/LP.jpg
+        email: luca.patane@unime.it
       - name: Riccardo
         surname: Caponetto
         role: Full Professor
         image: /assets/img/people/RC.jpg
+        email: riccardo.caponetto@unime.it
   - title: Researchers
     members:
       - name: Francesca
         surname: Sapuppo
         role: Research Fellow
         image: /assets/img/people/FS.jpg
+        email: francesca.sapuppo@unime.it
 
   - title: PhD Students
     members:
@@ -44,7 +51,9 @@ groups:
         surname: Maio
         role: PhD Student
         image: /assets/img/people/AM.jpg
+        email: antonino.maio@studenti.unime.it
       - name: Gianluca
         surname: Ragusa
         role: PhD Student
         image: /assets/img/people/GR.jpg
+        email: giovanni.ragusa1@studenti.unime.it
