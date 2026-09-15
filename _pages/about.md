@@ -57,35 +57,42 @@ _styles: |
     line-height: 1.65;
     max-width: 42rem;
   }
-  .home-highlights {
+  .home-section-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     margin-top: 2.5rem;
   }
-  .home-highlight-card {
-    display: block;
+  .home-section-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     text-decoration: none;
     color: inherit;
-    padding: 1.25rem 1.2rem;
+    background-color: var(--global-card-bg-color);
     border: 1px solid var(--global-divider-color);
     border-radius: 0.75rem;
-    background: var(--global-card-bg-color);
+    padding: 1.5rem 1rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .home-highlight-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  .home-section-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
-  .home-highlight-card .card-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--global-theme-color);
+  .home-section-card .card-emoji {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 0.6rem;
   }
-  .home-highlight-card h3 {
+  .home-section-card h3 {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 600;
+    color: var(--global-text-color);
+  }
+  .home-section-card:hover h3 {
+    color: var(--global-theme-color);
   }
 ---
 
@@ -99,17 +106,17 @@ The Automation and Robotics Laboratory is fully equipped to support teaching, se
 
 Key activities include laboratory sessions for the courses on Industrial Automation and Robotics and Bio-Inspired Robotics, as well as lectures and seminars on related subjects. The lab also hosts internal internship placements and thesis projects for engineering students, with topics closely tied to industrial automation, robotics, and bio-inspired systems. Ongoing research explores biorobotics and locomotion control in legged robots, with a particular emphasis on the development of bio-inspired models based on spiking neural networks for navigation control in mobile robots.
 
-<div class="home-highlights">
-  <a class="home-highlight-card" href="/teaching/">
-    <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+<div class="home-section-grid">
+  <a class="home-section-card" href="/teaching/">
+    <span class="card-emoji">&#x1F393;</span>
     <h3>Teaching</h3>
   </a>
-  <a class="home-highlight-card" href="/publications/">
-    <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
+  <a class="home-section-card" href="/publications/">
+    <span class="card-emoji">&#x1F4D6;</span>
     <h3>Publications</h3>
   </a>
-  <a class="home-highlight-card" href="/projects/">
-    <div class="card-icon"><i class="fa-solid fa-diagram-project"></i></div>
+  <a class="home-section-card" href="/projects/">
+    <span class="card-emoji">&#x1F4C8;</span>
     <h3>Projects</h3>
   </a>
 </div>
