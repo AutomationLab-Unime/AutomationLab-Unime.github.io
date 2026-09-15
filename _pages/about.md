@@ -64,6 +64,9 @@ _styles: |
     margin-top: 2.5rem;
   }
   .home-highlight-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
     padding: 1.25rem 1.2rem;
     border: 1px solid var(--global-divider-color);
     border-radius: 0.75rem;
@@ -80,21 +83,15 @@ _styles: |
     color: var(--global-theme-color);
   }
   .home-highlight-card h3 {
-    margin: 0 0 0.35rem;
+    margin: 0;
     font-size: 0.95rem;
     font-weight: 600;
-  }
-  .home-highlight-card p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: var(--global-text-color-light);
-    line-height: 1.55;
   }
 ---
 
 <div class="home-hero">
   <h1>Automation and Robotics Laboratory</h1>
-  <p class="hero-sub">Department of Engineering &middot; University of Messina</p>
+  <p class="hero-sub">Department of Engineering</p>
   <p>Developing bio-inspired models and intelligent control systems for autonomous robots, with a particular emphasis on spiking neural networks and locomotion control in legged and mobile platforms.</p>
 </div>
 
@@ -103,19 +100,16 @@ The Automation and Robotics Laboratory is fully equipped to support teaching, se
 Key activities include laboratory sessions for the courses on Industrial Automation and Robotics and Bio-Inspired Robotics, as well as lectures and seminars on related subjects. The lab also hosts internal internship placements and thesis projects for engineering students, with topics closely tied to industrial automation, robotics, and bio-inspired systems. Ongoing research explores biorobotics and locomotion control in legged robots, with a particular emphasis on the development of bio-inspired models based on spiking neural networks for navigation control in mobile robots.
 
 <div class="home-highlights">
-  <div class="home-highlight-card">
+  <a class="home-highlight-card" href="/teaching/">
     <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
     <h3>Teaching</h3>
-    <p>Laboratory sessions for Industrial Automation, Bio-Inspired Robotics, and related courses.</p>
-  </div>
-  <div class="home-highlight-card">
-    <div class="card-icon"><i class="fa-solid fa-microscope"></i></div>
-    <h3>Research</h3>
-    <p>Spiking neural networks, locomotion control, and bio-inspired navigation for mobile robots.</p>
-  </div>
-  <div class="home-highlight-card">
-    <div class="card-icon"><i class="fa-solid fa-file-lines"></i></div>
-    <h3>Theses &amp; Internships</h3>
-    <p>Internal placements and thesis projects on automation, robotics, and AI-driven control systems.</p>
-  </div>
+  </a>
+  <a class="home-highlight-card" href="/publications/">
+    <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
+    <h3>Publications</h3>
+  </a>
+  <a class="home-highlight-card" href="/projects/">
+    <div class="card-icon"><i class="fa-solid fa-diagram-project"></i></div>
+    <h3>Projects</h3>
+  </a>
 </div>
