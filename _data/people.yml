@@ -11,6 +11,14 @@
 #              (leave empty to show an initials avatar instead)
 #   email    : optional address; when set, a mail icon is shown on the card
 #              (leave empty to hide it)
+#   orcid    : optional ORCID profile URL or bare ID (e.g. 0000-0001-2345-6789);
+#              when set, an ORCID icon is shown on the card and the publications
+#              updater resolves the author directly via OpenAlex
+#              (leave empty to hide the icon and fall back to name matching)
+#   search_name : optional name used ONLY for the OpenAlex lookup when it
+#              differs from the displayed name (e.g. a nickname); the card
+#              keeps showing `name` + `surname`
+#              (leave empty to search by `name` + `surname`)
 #
 # Example:
 #   - name: Mario
@@ -18,6 +26,7 @@
 #     role: Full Professor
 #     image: /assets/img/people/mario-rossi.jpg
 #     email: mario.rossi@unime.it
+#     orcid: 0000-0001-2345-6789
 
 groups:
   - title: Professors
@@ -27,16 +36,19 @@ groups:
         role: Associate Professor
         image: /assets/img/people/MGX.jpg
         email: mxibilia@unime.it
+        orcid: https://orcid.org/0000-0001-7723-2051
       - name: Luca
         surname: Patanè
         role: Associate Professor
         image: /assets/img/people/LP.jpg
         email: luca.patane@unime.it
+        orcid: https://orcid.org/0000-0002-5488-9365
       - name: Riccardo
         surname: Caponetto
         role: Full Professor
         image: /assets/img/people/RC.jpg
         email: riccardo.caponetto@unime.it
+        orcid: https://orcid.org/0000-0002-9574-7187
   - title: Researchers
     members:
       - name: Francesca
@@ -44,6 +56,7 @@ groups:
         role: Research Fellow
         image: /assets/img/people/FS.jpg
         email: francesca.sapuppo@unime.it
+        orcid: https://orcid.org/0000-0001-8772-2759
 
   - title: PhD Students
     members:
@@ -52,8 +65,11 @@ groups:
         role: PhD Student
         image: /assets/img/people/AM.jpg
         email: antonino.maio@studenti.unime.it
+        orcid: https://orcid.org/0009-0009-8473-9550
       - name: Gianluca
         surname: Ragusa
+        search_name: Giovanni Ragusa
         role: PhD Student
         image: /assets/img/people/GR.jpg
         email: giovanni.ragusa1@studenti.unime.it
+        orcid: https://orcid.org/0009-0007-4708-8424

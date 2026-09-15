@@ -63,8 +63,14 @@ def load_members():
         for member in group.get("members", []):
             name = member.get("name", "").strip()
             surname = member.get("surname", "").strip()
-            if name and surname:
-                members.append({"name": name, "surname": surname, "full": f"{name} {surname}"})
+            if not (name and surname):
+                continue
+            search_name = (member.get("search_name") or "").strip()
+            full = search_name if search_name else f"{name} {surname}"
+            orcid = (member.get("orcid") or "").strip()
+            if orcid:
+                orcid = re.sub(r"^https?://(www\.)?orcid\.org/", "", orcid).strip()
+            members.append({"name": name, "surname": surname, "full": full, "orcid": orcid})
     return members
 
 
@@ -80,8 +86,34 @@ def candidate_matches(candidate, name, surname):
     return any(t.startswith(name_n[:1]) for t in tokens if t != surname_n)
 
 
+def find_author_by_orcid(orcid, member, mailto):
+    """Resolve an author directly from an ORCID iD. Returns None on failure
+    so the caller can fall back to name-based matching."""
+    url = f"{API}/authors/orcid:{orcid}"
+    try:
+        data = get_json(url, mailto)
+    except Exception as exc:  # noqa: BLE001
+        print(f"  {member['full']}: ORCID {orcid} lookup failed ({exc})", file=sys.stderr)
+        return None
+    author_id = data.get("id")
+    works_count = data.get("works_count", 0)
+    if not author_id:
+        print(f"  {member['full']}: ORCID {orcid} not found on OpenAlex", file=sys.stderr)
+        return None
+    display = norm(data.get("display_name", ""))
+    surname_n = norm(member["surname"])
+    if surname_n not in display:
+        print(f"  {member['full']}: ORCID {orcid} maps to '{display}', surname mismatch", file=sys.stderr)
+        return None
+    return (author_id, works_count)
+
+
 def find_best_author(member, mailto):
     """Return (author_id, works_count) for the best Messina-based profile."""
+    if member.get("orcid"):
+        found = find_author_by_orcid(member["orcid"], member, mailto)
+        if found:
+            return found
     url = f"{API}/authors?search={urllib.parse.quote(member['full'])}&per-page=50"
     data = get_json(url, mailto)
     best = None

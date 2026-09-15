@@ -82,6 +82,35 @@ _styles: |
     color: #ffffff;
     background-color: var(--global-theme-color);
   }
+  .people-orcid {
+    margin-top: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    color: var(--global-theme-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 50%;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .people-orcid:hover {
+    color: #ffffff;
+    background-color: var(--global-theme-color);
+  }
+  .people-contacts {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .people-contacts .people-email,
+  .people-contacts .people-orcid {
+    margin-top: 0;
+  }
+  .people-contacts a {
+    display: inline-flex;
+  }
 ---
 
 {::nomarkdown}
@@ -100,11 +129,20 @@ _styles: |
     {% endif %}
     <h3 class="people-name">{{ member.name }} {{ member.surname }}</h3>
     <p class="people-role">{{ member.role }}</p>
-    {% if member.email %}
-    <a class="people-email" href="mailto:{{ member.email }}" title="{{ member.email }}" aria-label="Invia una mail a {{ member.name }} {{ member.surname }}">
-      <i class="fa-solid fa-envelope"></i>
-    </a>
-    {% endif %}
+    <div class="people-contacts">
+      {% if member.email %}
+      <a class="people-email" href="mailto:{{ member.email }}" title="{{ member.email }}" aria-label="Invia una mail a {{ member.name }} {{ member.surname }}">
+        <i class="fa-solid fa-envelope"></i>
+      </a>
+      {% endif %}
+      {% if member.orcid %}
+      {% assign orcid_id = member.orcid | remove: "https://" | remove: "http://" %}
+      {% assign orcid_id = orcid_id | remove: "orcid.org/" %}
+      <a class="people-orcid" href="https://orcid.org/{{ orcid_id }}" target="_blank" rel="noopener noreferrer" title="{{ orcid_id }}" aria-label="Profilo ORCID di {{ member.name }} {{ member.surname }}">
+        <i class="ai ai-orcid"></i>
+      </a>
+      {% endif %}
+    </div>
   </div>
   {% endfor %}
 </div>
