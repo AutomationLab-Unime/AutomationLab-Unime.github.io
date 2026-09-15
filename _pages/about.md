@@ -20,13 +20,20 @@ announcements:
 
 latest_posts:
   enabled: false
+---
 
-_styles: |
+<style>
+  .post-header {
+    display: none;
+  }
+  .profile {
+    display: none;
+  }
   .home-hero {
     position: relative;
-    margin: -2rem -2rem 2rem;
+    margin-bottom: 2rem;
     padding: 3.5rem 2rem 3rem;
-    border-radius: 0;
+    border-radius: 0.75rem;
     background: linear-gradient(135deg, #1a3a4a 0%, #0d253f 100%);
     color: #ffffff;
     overflow: hidden;
@@ -38,7 +45,10 @@ _styles: |
     background: url('/assets/img/lab.jpg') center/cover no-repeat;
     opacity: 0.35;
   }
-  .home-hero > * { position: relative; z-index: 1; }
+  .home-hero > * {
+    position: relative;
+    z-index: 1;
+  }
   .home-hero h1 {
     margin: 0 0 0.4rem;
     font-size: 1.8rem;
@@ -49,11 +59,11 @@ _styles: |
   .home-hero .hero-sub {
     margin: 0 0 1.2rem;
     font-size: 1rem;
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
   }
   .home-hero p {
     margin: 0;
-    color: rgba(255,255,255,0.92);
+    color: rgba(255, 255, 255, 0.92);
     line-height: 1.65;
     max-width: 42rem;
   }
@@ -94,11 +104,11 @@ _styles: |
   .home-section-card:hover h3 {
     color: var(--global-theme-color);
   }
----
+</style>
 
 <div class="home-hero">
   <h1>Automation and Robotics Laboratory</h1>
-  <p class="hero-sub">Department of Engineering</p>
+  <p class="hero-sub">Department of Engineering &middot; University of Messina</p>
   <p>Developing bio-inspired models and intelligent control systems for autonomous robots, with a particular emphasis on spiking neural networks and locomotion control in legged and mobile platforms.</p>
 </div>
 
