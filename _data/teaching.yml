@@ -5,12 +5,14 @@
 #   link        : URL the course name links to (required)
 #   degree      : degree course in which the subject is taught (e.g. Laurea in Ingegneria Informatica)
 #   professor   : professor who teaches the subject
+#   material    : (optional) URL to course materials, shown as a "Material" link in the card
 #
 # Example:
 #   - title: Industrial Automation and Robotics
 #     link: https://www.unime.it/
 #     degree: Laurea in Ingegneria Informatica
 #     professor: Francesca Sapuppo
+#     material: https://www.unime.it/materiali
 
 items:
   - title: Soft Sensing and System Identification
@@ -33,6 +35,7 @@ items:
     link: https://unime.coursecatalogue.cineca.it/af/2026?corso=1081R&annoOrdinamento=2024&pds=110&coorte=2025&ad=A003267
     degree: LM BIOINGEGNERIA
     professor: Luca Patanè
+    material: https://github.com/AutomationLab-Unime/BioIng_SNN_Slides
   - title: Modellistica e Sistemi di Controllo
     link: https://unime.coursecatalogue.cineca.it/af/2026?corso=1080R&annoOrdinamento=2025&pds=PDS0-2025&coorte=2025&ad=A001279
     degree: INGEGNERIA BIOMEDICA

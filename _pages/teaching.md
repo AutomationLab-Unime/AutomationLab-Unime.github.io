@@ -55,6 +55,24 @@ _styles: |
     font-size: 0.8rem;
     color: var(--global-text-color-light);
   }
+  .teaching-bottom {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--global-divider-color);
+  }
+  .teaching-material {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+  .teaching-material:hover {
+    text-decoration: underline;
+  }
 ---
 
 {::nomarkdown}
@@ -69,6 +87,13 @@ _styles: |
       <p class="teaching-degree">{{ item.degree }}</p>
     </div>
     <p class="teaching-professor">Docente: {{ item.professor }}</p>
+    {% if item.material %}
+    <div class="teaching-bottom">
+      <a class="teaching-material" href="{{ item.material }}" title="{{ item.title }}">
+        <i class="fa-solid fa-link"></i> Material
+      </a>
+    </div>
+    {% endif %}
   </div>
   {% endfor %}
 </div>
