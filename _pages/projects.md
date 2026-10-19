@@ -29,16 +29,6 @@ _styles: |
   }
   .projects-group-title {
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  .projects-group-toggle {
-    font-size: 1rem;
-    line-height: 1;
-    transition: transform 0.2s ease;
-  }
-  .projects-group.collapsed .projects-group-toggle {
-    transform: rotate(-90deg);
   }
   .projects-group.collapsed .projects-grid {
     display: none;
@@ -115,7 +105,6 @@ _styles: |
 {% for group in site.data.projects.groups %}
 <div class="projects-group collapsed">
   <div class="projects-group-header" tabindex="0" role="button" aria-expanded="false">
-    <span class="projects-group-toggle"><i class="fa-solid fa-chevron-down"></i></span>
     <h2 class="projects-group-title">{{ group.title }}</h2>
   </div>
 
