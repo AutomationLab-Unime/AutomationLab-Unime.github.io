@@ -34,7 +34,7 @@ latest_posts:
     margin-bottom: 2rem;
     padding: 3.5rem 2rem 3rem;
     border-radius: 0.75rem;
-    background: linear-gradient(135deg, #1a3a4a 0%, #0d253f 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
     color: #ffffff;
     overflow: hidden;
   }
