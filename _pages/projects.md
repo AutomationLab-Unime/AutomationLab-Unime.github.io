@@ -9,12 +9,39 @@ _styles: |
   .post-header {
     display: none;
   }
-  .projects-section {
+  .projects-group {
+    margin-bottom: 2.5rem;
+  }
+  .projects-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     color: var(--global-theme-color);
     border-bottom: 1px solid var(--global-divider-color);
     padding-bottom: 0.5rem;
-    margin-top: 2rem;
     margin-bottom: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+  }
+  .projects-group-header:hover {
+    color: var(--global-hover-color);
+  }
+  .projects-group-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .projects-group-toggle {
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+  .projects-group.collapsed .projects-group-toggle {
+    transform: rotate(-90deg);
+  }
+  .projects-group.collapsed .projects-grid {
+    display: none;
   }
   .projects-grid {
     display: grid;
@@ -86,35 +113,57 @@ _styles: |
 {::nomarkdown}
 
 {% for group in site.data.projects.groups %}
-
-<h2 class="projects-section">{{ group.title }}</h2>
-
-<div class="projects-grid">
-  {% for item in group.items %}
-  <div class="projects-card">
-    <h3 class="projects-title">
-      <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
-    </h3>
-    {% if item.cdl %}
-    <div class="projects-body">
-      <p class="projects-author">{{ item.author }}</p>
-    </div>
-    <div class="projects-bottom">
-      <p class="projects-cdl">CdL: {{ item.cdl }}</p>
-      {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
-    </div>
-    {% else %}
-    <div class="projects-body">
-      <p class="projects-author">{{ item.author }}</p>
-    </div>
-    <div class="projects-bottom">
-      {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
-    </div>
-    {% endif %}
+<div class="projects-group collapsed">
+  <div class="projects-group-header" tabindex="0" role="button" aria-expanded="false">
+    <span class="projects-group-toggle"><i class="fa-solid fa-chevron-down"></i></span>
+    <h2 class="projects-group-title">{{ group.title }}</h2>
   </div>
-  {% endfor %}
-</div>
 
+  <div class="projects-grid">
+    {% for item in group.items %}
+    <div class="projects-card">
+      <h3 class="projects-title">
+        <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
+      </h3>
+      {% if item.cdl %}
+      <div class="projects-body">
+        <p class="projects-author">{{ item.author }}</p>
+      </div>
+      <div class="projects-bottom">
+        <p class="projects-cdl">CdL: {{ item.cdl }}</p>
+        {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+      </div>
+      {% else %}
+      <div class="projects-body">
+        <p class="projects-author">{{ item.author }}</p>
+      </div>
+      <div class="projects-bottom">
+        {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endfor %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.projects-group-header').forEach(function(header) {
+      header.addEventListener('click', function() {
+        var group = header.parentElement;
+        var expanded = header.getAttribute('aria-expanded') === 'true';
+        header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        group.classList.toggle('collapsed', expanded);
+      });
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        }
+      });
+    });
+  });
+</script>
 
 {:/nomarkdown}
