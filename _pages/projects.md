@@ -9,7 +9,7 @@ _styles: |
   .post-header {
     display: none;
   }
-  .projects-groups {
+  .projects-pills {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -17,11 +17,10 @@ _styles: |
     margin-bottom: 2rem;
   }
   .projects-group {
-    margin-bottom: 2.5rem;
+    display: none;
   }
-  /* Collapsed groups shrink to their pill so the pills flow side by side. */
-  .projects-group.collapsed {
-    margin-bottom: 0;
+  .projects-group.active {
+    display: block;
   }
   .projects-group-header {
     display: inline-flex;
@@ -57,16 +56,6 @@ _styles: |
     padding: 0.15rem 0.6rem;
     font-size: 0.85rem;
     font-weight: 600;
-  }
-  .projects-group.collapsed .projects-grid {
-    display: none;
-  }
-  /* Expanded: the group takes the full row and the grid drops below the pills. */
-  .projects-group:not(.collapsed) {
-    flex: 1 0 100%;
-  }
-  .projects-group:not(.collapsed) .projects-group-header {
-    margin-bottom: 1.25rem;
   }
   .projects-grid {
     display: grid;
@@ -137,15 +126,18 @@ _styles: |
 
 {::nomarkdown}
 
-<div class="projects-groups">
+<div class="projects-pills">
 {% for group in site.data.projects.groups %}
-<div class="projects-group collapsed">
-  <div class="projects-group-header" tabindex="0" role="button" aria-expanded="false">
+  <div class="projects-group-header" tabindex="0" role="button" aria-expanded="false" data-project-target="projects-grid-{{ forloop.index }}">
     <i class="fa-solid fa-diagram-project"></i>
     <h2 class="projects-group-title">{{ group.title }}</h2>
     <span class="projects-count">{{ group.items | size }}</span>
   </div>
+{% endfor %}
+</div>
 
+{% for group in site.data.projects.groups %}
+<div class="projects-group" id="projects-grid-{{ forloop.index }}">
   <div class="projects-grid">
     {% for item in group.items %}
     <div class="projects-card">
@@ -173,16 +165,18 @@ _styles: |
   </div>
 </div>
 {% endfor %}
-</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.projects-group-header').forEach(function(header) {
       header.addEventListener('click', function() {
-        var group = header.parentElement;
+        var target = document.getElementById(header.getAttribute('data-project-target'));
+        if (!target) {
+          return;
+        }
         var expanded = header.getAttribute('aria-expanded') === 'true';
         header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        group.classList.toggle('collapsed', expanded);
+        target.classList.toggle('active', !expanded);
       });
       header.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
