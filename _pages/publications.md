@@ -186,8 +186,9 @@ _styles: |
   (function () {
     "use strict";
 
-    var LIST_LIMIT = 20;
+    var PAGE_STEP = 20;
     var STEP = 20;
+    var LIST_LIMIT = PAGE_STEP;
 
     var search = document.getElementById("pub-search");
     var counter = document.getElementById("pub-count");
@@ -264,17 +265,26 @@ _styles: |
     });
 
     function norm(value) {
-      return (value || "").toLowerCase().replace(/\s+/g, " ").trim();
+      return (value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
     }
 
     function render() {
       var query = norm(search ? search.value : "");
       var limit = query ? Infinity : LIST_LIMIT;
       var visible = 0;
+      var matched = 0;
       groups.forEach(function (group) {
         var shown = 0;
         group.items.forEach(function (li) {
           var match = !query || norm(li.textContent).indexOf(query) !== -1;
+          if (match) {
+            matched++;
+          }
           var show = match && visible < limit;
           li.style.display = show ? "" : "none";
           if (show) {
@@ -287,7 +297,7 @@ _styles: |
         }
       });
       counter.textContent = query
-        ? visible + " result(s)"
+        ? visible + " of " + matched + " result(s)"
         : "Showing " + visible + " of " + items.length;
       moreBtn.textContent = "Load more (" + (items.length - visible) + " remaining)";
       moreBtn.hidden = !!(query || visible >= items.length);
@@ -300,7 +310,12 @@ _styles: |
       });
     }
     if (search) {
-      search.addEventListener("input", render);
+      search.addEventListener("input", function () {
+        if (!norm(search.value)) {
+          LIST_LIMIT = PAGE_STEP;
+        }
+        render();
+      });
     }
 
     render();

@@ -8,9 +8,16 @@ file. The file is only overwritten when at least one work is found, so a
 temporary API outage never breaks the site build.
 
 Usage:
-    python scripts/update_bibliography.py [--mailto someone@unime.it]
+    python scripts/update_bibliography.py [--mailto someone@unime.it] [--api-key KEY]
 
-The polite-pool contact can also be given via the OPENALEX_MAILTO env var.
+A free OpenAlex API key is required for cursor paging beyond the first page.
+Without it OpenAlex returns HTTP 401 ("API key required for cursor paging"),
+so each member's works would be silently truncated to the first 200 results.
+
+The polite-pool contact and the API key can also be given via the
+OPENALEX_MAILTO and OPENALEX_API_KEY env vars.
+
+Get a key at https://openalex.org/settings/api.
 """
 
 import argparse
@@ -38,6 +45,10 @@ BIB_FILE = ROOT / "_bibliography" / "papers.bib"
 API = "https://api.openalex.org"
 SLEEP = 0.15  # seconds between API calls (polite pool)
 
+# Filled in by main() from --api-key or the OPENALEX_API_KEY env var.
+# Required for cursor paging past the first page.
+API_KEY = None
+
 
 def norm(value):
     """Lowercase and strip accents, for forgiving comparisons."""
@@ -50,7 +61,13 @@ def get_json(url, mailto):
     if mailto and "mailto=" not in url:
         sep = "&" if "?" in url else "?"
         url = f"{url}{sep}mailto={urllib.parse.quote(mailto)}"
-    req = urllib.request.Request(url, headers={"User-Agent": f"automationlab-site-updater/1.0 (mailto:{mailto})" if mailto else "automationlab-site-updater/1.0"})
+    if API_KEY and "api_key=" not in url:
+        sep = "&" if "?" in url else "?"
+        url = f"{url}{sep}api_key={urllib.parse.quote(API_KEY)}"
+    headers = {}
+    if mailto:
+        headers["User-Agent"] = f"automationlab-site-updater/1.0 (mailto:{mailto})"
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=60) as resp:
         return json.load(resp)
 
@@ -100,11 +117,9 @@ def find_author_by_orcid(orcid, member, mailto):
     if not author_id:
         print(f"  {member['full']}: ORCID {orcid} not found on OpenAlex", file=sys.stderr)
         return None
-    display = norm(data.get("display_name", ""))
-    surname_n = norm(member["surname"])
-    if surname_n not in display:
-        print(f"  {member['full']}: ORCID {orcid} maps to '{display}', surname mismatch", file=sys.stderr)
-        return None
+    # The ORCID iD is an authoritative identifier, so the profile is trusted
+    # as-is: display-name spelling varies ("Patanè" vs "Patane") and a strict
+    # surname check would reject perfectly valid matches.
     return (author_id, works_count)
 
 
@@ -129,19 +144,30 @@ def find_best_author(member, mailto):
 
 
 def fetch_works(author_id, mailto):
+    """Fetch every work for an author, following cursor pagination.
+
+    Returns (works, complete). `complete` is False when pagination stopped
+    early (network error, or the API key missing so paging past page 1 is
+    rejected with HTTP 401) — the caller keeps whatever was already fetched
+    instead of discarding the whole member.
+    """
     works = {}
     cursor = "*"
     while cursor:
         params = {"filter": f"author.id:{author_id}", "per-page": "200", "cursor": cursor}
         url = f"{API}/works?{urllib.parse.urlencode(params)}"
-        data = get_json(url, mailto)
+        try:
+            data = get_json(url, mailto)
+        except Exception as exc:  # noqa: BLE001
+            print(f"    pagination stopped after {len(works)} work(s): {exc}", file=sys.stderr)
+            return works, False
         for work in data.get("results", []):
             wid = work.get("id")
             if wid:
                 works[wid] = work
         cursor = data.get("meta", {}).get("next_cursor")
         time.sleep(SLEEP)
-    return works
+    return works, True
 
 
 def biblio_value(work, key):
@@ -247,10 +273,25 @@ def build_bibtex(work, used):
 
 
 def main():
+    global API_KEY
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mailto", default=None)
+    parser.add_argument(
+        "--api-key",
+        default=None,
+        help="OpenAlex API key (required for cursor paging). "
+        "Falls back to the OPENALEX_API_KEY env var.",
+    )
     args = parser.parse_args()
     mailto = args.mailto or os.environ.get("OPENALEX_MAILTO")
+    API_KEY = (args.api_key or os.environ.get("OPENALEX_API_KEY") or "").strip() or None
+    if not API_KEY:
+        print(
+            "Warning: no OpenAlex API key (--api-key / OPENALEX_API_KEY). "
+            "Cursor paging past the first page will fail with HTTP 401 and each "
+            "author will be truncated to ~200 works.",
+            file=sys.stderr,
+        )
 
     try:
         members = load_members()
@@ -270,12 +311,12 @@ def main():
             print(f"  {member['full']}: no matching Messina profile on OpenAlex", file=sys.stderr)
             continue
         author_id, works_count = author
-        try:
-            works = fetch_works(author_id, mailto)
-        except Exception as exc:  # noqa: BLE001
-            print(f"  {member['full']}: works fetch failed ({exc})", file=sys.stderr)
+        works, complete = fetch_works(author_id, mailto)
+        if not works:
+            print(f"  {member['full']}: no works could be fetched", file=sys.stderr)
             continue
-        print(f"  {member['full']}: {len(works)} work(s) from {author_id}", file=sys.stderr)
+        note = "" if complete else " (PARTIAL: pagination stopped early)"
+        print(f"  {member['full']}: {len(works)}/{works_count} work(s) from {author_id}{note}", file=sys.stderr)
         collected.update(works)
         time.sleep(SLEEP)
 

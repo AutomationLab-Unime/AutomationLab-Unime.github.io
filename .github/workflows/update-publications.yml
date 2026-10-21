@@ -25,6 +25,8 @@ jobs:
           python-version: "3.13"
           cache: "pip"
       - name: Regenerate bibliography from OpenAlex 📄
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: |
           pip3 install pyyaml
           python scripts/update_bibliography.py --mailto "automationlab.unime.site@gmail.com"
