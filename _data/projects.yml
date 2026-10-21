@@ -48,52 +48,62 @@ groups:
       - title: Sviluppo di un sistema di controllo bioispirato basato su SNN per la navigazione autonoma di un Pioneer P3-DX e il raggiungimento sequenziale di target cromatici
         link: https://github.com/AutomationLab-Unime/SNN-target-tracking-Faraci-Galletta
         author: Ambra Faraci, Carmen Galletta
-        year: 2026
+        year: 2025/2026
       - title: Bio-inspired Trail Following Rover
         link: https://github.com/AutomationLab-Unime/snn-path-following
         author: Claudio Giacobbe
-        year: 2026
+        year: 2025/2026
       - title: "EMOROB: Modello Bio-Ispirato per la Navigazione Adattiva in Ambienti Ospedalieri"
         link: https://github.com/AutomationLab-Unime/EMOROB-Bioinspired-Adaptive-Navigation-Altomonte
         author: Federica Altomonte
-        year: 2026
+        year: 2025/2026
       - title: Sviluppo di un ambiente virtuale in CoppeliaSim per il tracciamento visivo di strumenti laparoscopici mediante YOLO e controllo in tempo reale del robot UR5
         link: https://github.com/AutomationLab-Unime/Laparoscopic-yolo-robotic-tracking-Giacoppo-Venuto
         author: Irene Giacoppo, Alessia Venuto
-        year: 2026
+        year: 2025/2026
       - title: Controllo Bioispirato e Behavioral Cloning per un robot serpentiforme
         link: https://github.com/AutomationLab-Unime/Bioinspired-behavioral-cloning-Snake-Robot-Gioco
         author: Rosario Gioco
-        year: 2026
+        year: 2025/2026
       - title: Stima del peso tramite braccio robotico
         link: https://github.com/AutomationLab-Unime/Stima_Peso_SNN_Sindoni
         author: Gianluca Sindoni
-        year: 2026
+        year: 2025/2026
 
   - title: Thesis
     items:
+      - title: Classificazione di motor imagery da EEG
+        link: https://github.com/AutomationLab-Unime/EEG-Motor-Imagery-Classification-Caronella
+        author: Emanuele Caronella 
+        year: October 2026
+        cdl: Ing. Biomedica
+      - title: Predizione del deterioramento clinico con NEWS-2 e Delta-NEWS
+        link: https://github.com/AutomationLab-Unime/clinical-deterioration-prediction-news2-Crementi
+        author: Mara Crementi
+        year: October 2026
+        cdl: Ing. Biomedica
       - title: Sviluppo di un Prototipo Hardware di Neurone Spiking
         link: https://github.com/AutomationLab-Unime/Neuron-Hardware-Pante
         author: Serena Pantè
-        year: 2026
+        year: July 2026
         cdl: Ing. Elettronica e Informatica
       - title: Tecniche di Controllo Basate su Reti Spiking per Manipolatori Robotici
         link: https://github.com/AutomationLab-Unime/SNN-Robotic-manipulator-Sammoudi
         author: Mariam Sammoudi
-        year: 2026
+        year: July 2026
         cdl: Ing. Biomedica
       - title: Analisi Volumetrica Dei Gangli della Base per L’identificazione di Biomarcatori Strutturali nel Morbo di Parkinson
         link: https://github.com/AutomationLab-Unime/Parkinson-Basal-Ganglia-Analysis-Gatto
         author: Elvira Pia Gatto
-        year: 2026
+        year: July 2026
         cdl: Ing. Biomedica
       - title: Sviluppo di Algoritmi di Controllo per Applicazioni su Bracci Robotici
         link: https://github.com/AutomationLab-Unime/Robotic-Arm-Oliva
         author: Martina Oliva
-        year: 2026
+        year: July 2026
         cdl: Ing. Biomedica
       - title: Classificazione Automatica di Battiti ECG E Analisi Dell’influenza Degli Spike di Pacemaker Tramite Modelli Data-driven
         link: https://github.com/AutomationLab-Unime/ECG-Classification-D-Agostino
         author: Elisa D'Agostino
-        year: 2026
+        year: July 2026
         cdl: Ing. Biomedica

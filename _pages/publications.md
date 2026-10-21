@@ -108,15 +108,59 @@ _styles: |
     border-bottom: none;
   }
   #publications > h2 {
-    color: var(--global-theme-color);
-    border-bottom: 1px solid var(--global-divider-color);
-    padding-bottom: 0.5rem;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--global-theme-color);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border-bottom: none;
     margin-top: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  #publications > h2 i {
+    font-size: 0.9rem;
+  }
+  #publications > h2 a {
+    color: #ffffff;
+  }
+  .pub-year-count {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .pub-title-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--global-theme-color);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    margin: 0 0 1.25rem;
+  }
+  .pub-title-pill i {
+    font-size: 0.9rem;
   }
 ---
 
 {::nomarkdown}
+
+<h1 class="pub-title-pill">
+  <i class="fa-solid fa-book-open"></i>
+  Publications
+  <span class="pub-year-count" id="pub-total-count" hidden></span>
+</h1>
 
 <div class="pub-header">
   <input
@@ -155,7 +199,13 @@ _styles: |
     var current = null;
     Array.prototype.forEach.call(container.children, function (el) {
       if (el.tagName === "H2") {
-        current = { header: el, items: [] };
+        var yIcon = document.createElement("i");
+        yIcon.className = "fa-solid fa-calendar";
+        el.insertBefore(yIcon, el.firstChild);
+        var yCount = document.createElement("span");
+        yCount.className = "pub-year-count";
+        el.appendChild(yCount);
+        current = { header: el, countEl: yCount, items: [] };
         groups.push(current);
       } else if (el.tagName === "OL" || (el.classList && el.classList.contains("bibliography"))) {
         var lis = Array.prototype.filter.call(el.children, function (child) {
@@ -172,7 +222,16 @@ _styles: |
     var items = [];
     groups.forEach(function (group) {
       Array.prototype.push.apply(items, group.items);
+      if (group.countEl) {
+        group.countEl.textContent = group.items.length;
+      }
     });
+
+    var totalBadge = document.getElementById("pub-total-count");
+    if (totalBadge) {
+      totalBadge.textContent = items.length;
+      totalBadge.hidden = false;
+    }
 
     items.forEach(function (li) {
       var titleEl = li.querySelector(".title");

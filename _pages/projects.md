@@ -13,22 +13,40 @@ _styles: |
     margin-bottom: 2.5rem;
   }
   .projects-group-header {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    color: var(--global-theme-color);
-    border-bottom: 1px solid var(--global-divider-color);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
+    gap: 0.5rem;
+    background-color: var(--global-theme-color);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    margin-bottom: 1.25rem;
     cursor: pointer;
     user-select: none;
-    transition: color 0.2s ease;
+    transition: filter 0.2s ease;
   }
   .projects-group-header:hover {
-    color: var(--global-hover-color);
+    color: #ffffff;
+    filter: brightness(0.92);
+  }
+  .projects-group-header i {
+    font-size: 0.9rem;
   }
   .projects-group-title {
     margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+  .projects-count {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
   }
   .projects-group.collapsed .projects-grid {
     display: none;
@@ -105,7 +123,9 @@ _styles: |
 {% for group in site.data.projects.groups %}
 <div class="projects-group collapsed">
   <div class="projects-group-header" tabindex="0" role="button" aria-expanded="false">
+    <i class="fa-solid fa-diagram-project"></i>
     <h2 class="projects-group-title">{{ group.title }}</h2>
+    <span class="projects-count">{{ group.items | size }}</span>
   </div>
 
   <div class="projects-grid">
