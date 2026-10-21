@@ -57,6 +57,17 @@ _styles: |
     font-size: 0.85rem;
     font-weight: 600;
   }
+  .projects-panel {
+    background-color: var(--global-card-bg-color);
+    background-color: color-mix(in srgb, var(--global-theme-color) 6%, transparent);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+  /* No group open: hide the frame entirely instead of showing an empty box. */
+  .projects-panel.empty {
+    display: none;
+  }
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
@@ -136,6 +147,7 @@ _styles: |
 {% endfor %}
 </div>
 
+<div class="projects-panel empty">
 {% for group in site.data.projects.groups %}
 <div class="projects-group" id="projects-grid-{{ forloop.index }}">
   <div class="projects-grid">
@@ -165,18 +177,40 @@ _styles: |
   </div>
 </div>
 {% endfor %}
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.projects-group-header').forEach(function(header) {
+    var headers = document.querySelectorAll('.projects-group-header');
+    var panel = document.querySelector('.projects-panel');
+    var syncPanel = function() {
+      if (!panel) {
+        return;
+      }
+      var anyOpen = document.querySelector('.projects-group.active') !== null;
+      panel.classList.toggle('empty', !anyOpen);
+    };
+    syncPanel();
+    headers.forEach(function(header) {
       header.addEventListener('click', function() {
         var target = document.getElementById(header.getAttribute('data-project-target'));
         if (!target) {
           return;
         }
         var expanded = header.getAttribute('aria-expanded') === 'true';
-        header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        target.classList.toggle('active', !expanded);
+        // Accordion: opening one group closes every other one.
+        headers.forEach(function(other) {
+          var otherTarget = document.getElementById(other.getAttribute('data-project-target'));
+          other.setAttribute('aria-expanded', 'false');
+          if (otherTarget) {
+            otherTarget.classList.remove('active');
+          }
+        });
+        if (!expanded) {
+          header.setAttribute('aria-expanded', 'true');
+          target.classList.add('active');
+        }
+        syncPanel();
       });
       header.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
