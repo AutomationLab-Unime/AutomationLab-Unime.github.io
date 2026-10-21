@@ -9,8 +9,19 @@ _styles: |
   .post-header {
     display: none;
   }
+  .projects-groups {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
   .projects-group {
     margin-bottom: 2.5rem;
+  }
+  /* Collapsed groups shrink to their pill so the pills flow side by side. */
+  .projects-group.collapsed {
+    margin-bottom: 0;
   }
   .projects-group-header {
     display: inline-flex;
@@ -23,7 +34,6 @@ _styles: |
     line-height: 1;
     padding: 0.5rem 1.1rem;
     border-radius: 999px;
-    margin-bottom: 1.25rem;
     cursor: pointer;
     user-select: none;
     transition: filter 0.2s ease;
@@ -50,6 +60,13 @@ _styles: |
   }
   .projects-group.collapsed .projects-grid {
     display: none;
+  }
+  /* Expanded: the group takes the full row and the grid drops below the pills. */
+  .projects-group:not(.collapsed) {
+    flex: 1 0 100%;
+  }
+  .projects-group:not(.collapsed) .projects-group-header {
+    margin-bottom: 1.25rem;
   }
   .projects-grid {
     display: grid;
@@ -120,6 +137,7 @@ _styles: |
 
 {::nomarkdown}
 
+<div class="projects-groups">
 {% for group in site.data.projects.groups %}
 <div class="projects-group collapsed">
   <div class="projects-group-header" tabindex="0" role="button" aria-expanded="false">
@@ -155,6 +173,7 @@ _styles: |
   </div>
 </div>
 {% endfor %}
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
