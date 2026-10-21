@@ -22,6 +22,9 @@ _styles: |
     border-radius: 999px;
     margin: 2.5rem 0 1rem;
   }
+  .people-group:first-of-type .people-pill {
+    margin-top: 0;
+  }
   .people-pill i {
     font-size: 0.9rem;
   }

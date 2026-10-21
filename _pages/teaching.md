@@ -84,7 +84,7 @@ _styles: |
     line-height: 1;
     padding: 0.5rem 1.1rem;
     border-radius: 999px;
-    margin: 2rem 0 1.25rem;
+    margin: 0 0 1.25rem;
   }
   .teaching-pill i {
     font-size: 0.9rem;
@@ -100,36 +100,31 @@ _styles: |
 
 {::nomarkdown}
 
-{% assign degree_groups = site.data.teaching.items | group_by: "degree" %}
-{% for group in degree_groups %}
-<section class="teaching-group">
-  <h2 class="teaching-pill">
-    <i class="fa-solid fa-graduation-cap"></i>
-    {{ group.name }}
-    <span class="teaching-count">{{ group.items | size }}</span>
-  </h2>
+<h1 class="teaching-pill">
+  <i class="fa-solid fa-graduation-cap"></i>
+  Teaching
+  <span class="teaching-count">{{ site.data.teaching.items | size }}</span>
+</h1>
 
-  <div class="teaching-grid">
-    {% for item in group.items %}
-    <div class="teaching-card">
-      <h3 class="teaching-title">
-        <a href="{{ item.link }}">{{ item.title }}</a>
-      </h3>
-      <div class="teaching-body">
-        <p class="teaching-degree">{{ item.degree }}</p>
-      </div>
-      <p class="teaching-professor">Docente: {{ item.professor }}</p>
-      {% if item.material %}
-      <div class="teaching-bottom">
-        <a class="teaching-material" href="{{ item.material }}" title="{{ item.title }}">
-          <i class="fa-solid fa-link"></i> Material
-        </a>
-      </div>
-      {% endif %}
+<div class="teaching-grid">
+  {% for item in site.data.teaching.items %}
+  <div class="teaching-card">
+    <h3 class="teaching-title">
+      <a href="{{ item.link }}">{{ item.title }}</a>
+    </h3>
+    <div class="teaching-body">
+      <p class="teaching-degree">{{ item.degree }}</p>
     </div>
-    {% endfor %}
+    <p class="teaching-professor">Docente: {{ item.professor }}</p>
+    {% if item.material %}
+    <div class="teaching-bottom">
+      <a class="teaching-material" href="{{ item.material }}" title="{{ item.title }}">
+        <i class="fa-solid fa-link"></i> Material
+      </a>
+    </div>
+    {% endif %}
   </div>
-</section>
-{% endfor %}
+  {% endfor %}
+</div>
 
 {:/nomarkdown}

@@ -129,12 +129,14 @@ _styles: |
   #publications > h2 a {
     color: #ffffff;
   }
-  .pub-year-count {
+  .pub-year-count,
+  #publications > h2 span.pub-year-count {
     background-color: rgba(255, 255, 255, 0.25);
     border-radius: 999px;
     padding: 0.15rem 0.6rem;
     font-size: 0.85rem;
     font-weight: 600;
+    line-height: 1;
   }
   .pub-title-pill {
     display: inline-flex;
@@ -159,7 +161,7 @@ _styles: |
 <h1 class="pub-title-pill">
   <i class="fa-solid fa-book-open"></i>
   Publications
-  <span class="pub-year-count" id="pub-total-count" hidden></span>
+  <span class="pub-year-count" id="pub-total-count">{% bibliography_count %}</span>
 </h1>
 
 <div class="pub-header">
@@ -228,8 +230,10 @@ _styles: |
     });
 
     var totalBadge = document.getElementById("pub-total-count");
-    if (totalBadge) {
+    if (totalBadge && !totalBadge.textContent.trim()) {
       totalBadge.textContent = items.length;
+    }
+    if (totalBadge) {
       totalBadge.hidden = false;
     }
 
