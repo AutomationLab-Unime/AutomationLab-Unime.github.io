@@ -16,11 +16,25 @@ _styles: |
     gap: 0.75rem;
     margin-bottom: 2rem;
   }
+  /* The group is a grid whose single row animates between 0fr (collapsed)
+     and 1fr (expanded). This gives a real height animation with no fixed
+     max-height guess, so the panel always reveals its exact content size.
+     Only one group is open at a time (accordion), so the bordered frame is
+     always a single visible box. */
   .projects-group {
-    display: none;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.35s ease, opacity 0.3s ease;
   }
   .projects-group.active {
-    display: block;
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  /* Clips the framed content while the row shrinks to 0fr. */
+  .projects-group > .projects-group-clip {
+    overflow: hidden;
+    min-height: 0;
   }
   .projects-group-header {
     display: inline-flex;
@@ -57,16 +71,20 @@ _styles: |
     font-size: 0.85rem;
     font-weight: 600;
   }
-  .projects-panel {
+  /* Border frame around the open group's projects. It lives inside the clipped
+     wrapper, so a collapsed group hides it completely (no empty box). */
+  .projects-panel-frame {
     background-color: var(--global-card-bg-color);
     background-color: color-mix(in srgb, var(--global-theme-color) 6%, transparent);
     border: 1px solid var(--global-divider-color);
     border-radius: 1rem;
     padding: 1.5rem;
+    margin-bottom: 2rem;
   }
-  /* No group open: hide the frame entirely instead of showing an empty box. */
-  .projects-panel.empty {
-    display: none;
+  @media (prefers-reduced-motion: reduce) {
+    .projects-group {
+      transition: none;
+    }
   }
   .projects-grid {
     display: grid;
@@ -147,50 +165,43 @@ _styles: |
 {% endfor %}
 </div>
 
-<div class="projects-panel empty">
 {% for group in site.data.projects.groups %}
 <div class="projects-group" id="projects-grid-{{ forloop.index }}">
-  <div class="projects-grid">
-    {% for item in group.items %}
-    <div class="projects-card">
-      <h3 class="projects-title">
-        <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
-      </h3>
-      {% if item.cdl %}
-      <div class="projects-body">
-        <p class="projects-author">{{ item.author }}</p>
+  <div class="projects-group-clip">
+    <div class="projects-panel-frame">
+      <div class="projects-grid">
+        {% for item in group.items %}
+        <div class="projects-card">
+          <h3 class="projects-title">
+            <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
+          </h3>
+          {% if item.cdl %}
+          <div class="projects-body">
+            <p class="projects-author">{{ item.author }}</p>
+          </div>
+          <div class="projects-bottom">
+            <p class="projects-cdl">CdL: {{ item.cdl }}</p>
+            {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+          </div>
+          {% else %}
+          <div class="projects-body">
+            <p class="projects-author">{{ item.author }}</p>
+          </div>
+          <div class="projects-bottom">
+            {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
       </div>
-      <div class="projects-bottom">
-        <p class="projects-cdl">CdL: {{ item.cdl }}</p>
-        {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
-      </div>
-      {% else %}
-      <div class="projects-body">
-        <p class="projects-author">{{ item.author }}</p>
-      </div>
-      <div class="projects-bottom">
-        {% if item.year %}<p class="projects-year">{{ item.year }}</p>{% endif %}
-      </div>
-      {% endif %}
     </div>
-    {% endfor %}
   </div>
 </div>
 {% endfor %}
-</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var headers = document.querySelectorAll('.projects-group-header');
-    var panel = document.querySelector('.projects-panel');
-    var syncPanel = function() {
-      if (!panel) {
-        return;
-      }
-      var anyOpen = document.querySelector('.projects-group.active') !== null;
-      panel.classList.toggle('empty', !anyOpen);
-    };
-    syncPanel();
     headers.forEach(function(header) {
       header.addEventListener('click', function() {
         var target = document.getElementById(header.getAttribute('data-project-target'));
@@ -210,7 +221,6 @@ _styles: |
           header.setAttribute('aria-expanded', 'true');
           target.classList.add('active');
         }
-        syncPanel();
       });
       header.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
