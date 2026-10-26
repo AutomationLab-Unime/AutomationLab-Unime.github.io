@@ -264,6 +264,10 @@ def build_bibtex(work, used):
     pdf_url = ((work.get("best_oa_location") or {}).get("pdf_url") or "").strip()
     if pdf_url:
         fields.append(("pdf", pdf_url))
+    # al-folio only renders the "Cite" button (and its hidden BibTeX block) for
+    # entries carrying this flag. It is listed in `filtered_bibtex_keywords`, so
+    # it never shows up in the citation itself.
+    fields.append(("bibtex_show", "true"))
 
     lines = [f"@{entry_type_name}{{{key},"]
     for field, value in fields:

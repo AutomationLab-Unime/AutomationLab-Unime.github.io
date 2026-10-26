@@ -96,6 +96,16 @@ _styles: |
   #publications .bibliography > li .links {
     margin-top: 0.5rem;
   }
+  /* BibTeX panel opened by the "Cite" button. It reuses the theme's
+     `.hidden`/`.open` toggle (same mechanism as the abstract panel). */
+  #publications .bibliography > li .bibtex pre {
+    padding-right: 3rem; /* leave room for the copy button */
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  #publications .bibliography > li .bibtex .copy {
+    opacity: 1;
+  }
   #publications .bibliography > li .badges {
     margin-top: 0.5rem;
   }
@@ -238,10 +248,76 @@ _styles: |
       totalBadge.hidden = false;
     }
 
+    // The BibTeX panel is rendered server-side, so it must stay out of the text
+    // searched by the search box: otherwise every entry would match technical
+    // keywords such as "article", "doi" or "http".
+    function searchableText(li) {
+      var clone = li.cloneNode(true);
+      var noise = clone.querySelectorAll(".bibtex");
+      for (var n = 0; n < noise.length; n++) {
+        if (noise[n].parentNode) {
+          noise[n].parentNode.removeChild(noise[n]);
+        }
+      }
+      return norm(clone.textContent);
+    }
+
+    // al-folio ships this button as "Bib"; the lab site labels it "Cite".
+    function setupCiteButton(li, linksEl) {
+      var btn = linksEl.querySelector("a.bibtex");
+      if (!btn) {
+        return;
+      }
+      var panel = li.querySelector(".bibtex.hidden");
+      var keyed = li.querySelector("[id]");
+      if (!panel) {
+        // No citation was generated for this entry: drop the dead button.
+        if (btn.parentNode) {
+          btn.parentNode.removeChild(btn);
+        }
+        return;
+      }
+
+      btn.textContent = "Cite";
+      btn.setAttribute("title", "Show the BibTeX citation");
+      btn.setAttribute("aria-label", "Show the BibTeX citation");
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("tabindex", "0");
+      // Put it after DOI/PDF instead of before them.
+      linksEl.appendChild(btn);
+      if (keyed && keyed.id) {
+        panel.id = "bibtex-" + keyed.id;
+        btn.setAttribute("aria-controls", panel.id);
+      }
+
+      // The theme's common.js toggles the panel on click; read the new state on
+      // the next tick so aria-expanded stays in sync.
+      btn.addEventListener("click", function () {
+        window.setTimeout(function () {
+          btn.setAttribute(
+            "aria-expanded",
+            panel.classList.contains("open") ? "true" : "false"
+          );
+        }, 0);
+      });
+      btn.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          btn.click();
+        }
+      });
+    }
+
     items.forEach(function (li) {
+      li.__searchText = searchableText(li);
+
       var titleEl = li.querySelector(".title");
       var linksEl = li.querySelector(".links");
-      if (!titleEl || !linksEl) {
+      if (!linksEl) {
+        return;
+      }
+      setupCiteButton(li, linksEl);
+      if (!titleEl) {
         return;
       }
       var htmlBtn = null;
@@ -281,7 +357,7 @@ _styles: |
       groups.forEach(function (group) {
         var shown = 0;
         group.items.forEach(function (li) {
-          var match = !query || norm(li.textContent).indexOf(query) !== -1;
+          var match = !query || (li.__searchText || "").indexOf(query) !== -1;
           if (match) {
             matched++;
           }

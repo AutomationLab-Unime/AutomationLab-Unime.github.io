@@ -73,10 +73,10 @@ groups:
         image: /assets/img/people/GR.jpg
         email: giovanni.ragusa1@studenti.unime.it
         orcid: https://orcid.org/0009-0007-4708-8424
-      # - name: Gabriele
-      #   surname: Rinaldi
-      #   search_name: Gabriele Rinaldi
-      #   role: PhD Student
-      #   image: 
-      #   email: gabriele.rinaldi@studenti.unime.it
-      #   orcid: 
+      - name: Gabriele
+        surname: Rinaldi
+        search_name: Gabriele Rinaldi
+        role: PhD Student
+        image: /assets/img/people/GaRi.jpg
+        email: gabriele.rinaldi@studenti.unime.it
+        orcid: https://orcid.org/0009-0001-4231-4409
