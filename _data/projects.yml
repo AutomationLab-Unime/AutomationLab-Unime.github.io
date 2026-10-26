@@ -72,6 +72,11 @@ groups:
 
   - title: Thesis
     items:
+      - title: Motion Control Policy for Legged Robots
+        link: https://github.com/AutomationLab-Unime/RL_robots
+        author: Gabriele Rinaldi
+        year: October 2026
+        cdl: Engineering in Computer Science
       - title: Classificazione di motor imagery da EEG
         link: https://github.com/AutomationLab-Unime/EEG-Motor-Imagery-Classification-Caronella
         author: Emanuele Caronella 
