@@ -176,18 +176,38 @@ def biblio_value(work, key):
 
 
 def entry_type(work):
-    mapping = {
-        "article": "article",
-        "review": "article",
-        "book-chapter": "incollection",
-        "proceedings-article": "inproceedings",
-        "book": "book",
-        "dissertation": "phdthesis",
-        "report": "techreport",
-        "preprint": "misc",
-        "software": "misc",
-    }
-    return mapping.get(work.get("type"), "misc")
+    """Map an OpenAlex work to a BibTeX type al-folio can render.
+
+    al-folio only prints the venue for ``article`` (``journal``),
+    ``inproceedings`` / ``incollection`` (``booktitle``) and theses
+    (``school``); every other type silently drops it. OpenAlex, however,
+    labels journal editorials as ``editorial`` and many conference papers as
+    ``article``, so the work type alone would hide most venues. The source
+    type is therefore used as a fallback: a work published in a journal,
+    book series or ebook platform is rendered as an ``article``.
+    """
+    work_type = (work.get("type") or "").lower()
+    source = (work.get("primary_location") or {}).get("source") or {}
+    source_type = (source.get("type") or "").lower()
+    has_venue = bool(source.get("display_name"))
+
+    if work_type in ("conference-paper", "conference-abstract", "proceedings-article"):
+        return "inproceedings"
+    if work_type == "book-chapter":
+        return "incollection"
+    if work_type == "book":
+        return "book"
+    if work_type == "dissertation":
+        return "phdthesis"
+    if work_type == "report":
+        return "techreport"
+    if work_type == "dataset" or source_type == "repository":
+        return "misc"
+    if has_venue and source_type in ("journal", "book series", "ebook platform"):
+        return "article"
+    if work_type in ("article", "review", "editorial", "letter", "erratum", "retraction"):
+        return "article"
+    return "misc"
 
 
 def clean(value):
@@ -233,14 +253,20 @@ def build_bibtex(work, used):
         ("title", clean(work.get("title") or "")),
     ]
     source = (work.get("primary_location") or {}).get("source") or {}
-    journal = source.get("display_name")
+    venue = source.get("display_name")
+    source_type = (source.get("type") or "").lower()
     entry_type_name = entry_type(work)
-    if entry_type_name == "inproceedings" and journal:
-        fields.append(("booktitle", clean(journal)))
-    elif entry_type_name in ("article", "review") and journal:
-        fields.append(("journal", clean(journal)))
-    elif journal:
-        fields.append(("journal", clean(journal)))
+    if venue:
+        # Emit the field matching the type: al-folio reads `journal` for
+        # articles and `booktitle` for proceedings/chapters. Books in a book
+        # series carry the series name; al-folio does not display it, but the
+        # BibTeX citation keeps it.
+        if entry_type_name in ("inproceedings", "incollection"):
+            fields.append(("booktitle", clean(venue)))
+        elif entry_type_name == "article":
+            fields.append(("journal", clean(venue)))
+        elif entry_type_name == "book" and source_type == "book series":
+            fields.append(("series", clean(venue)))
     volume = biblio_value(work, "volume")
     if volume:
         fields.append(("volume", volume))
