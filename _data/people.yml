@@ -80,3 +80,10 @@ groups:
         image: /assets/img/people/GaRi.jpeg
         email: gabriele.rinaldi@studenti.unime.it
         orcid: https://orcid.org/0009-0001-4231-4409
+      - name: Nebojsa
+        surname: Koledin
+        search_name: Nebojsa Koledin
+        role: PhD Student
+        image: /assets/img/people/NK.jpeg
+        email: nebojsa.koledin@studenti.unime.it
+        orcid: https://orcid.org/0009-0008-1724-1923
